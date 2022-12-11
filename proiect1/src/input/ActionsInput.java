@@ -9,7 +9,6 @@ public class ActionsInput {
     private ContainsInput filters;
     private int count;
     private String startsWith;
-    private String objectType;
     private int rate;
 
     public int getRate() {
@@ -18,14 +17,6 @@ public class ActionsInput {
 
     public void setRate(int rate) {
         this.rate = rate;
-    }
-
-    public String getObjectType() {
-        return objectType;
-    }
-
-    public void setObjectType(String objectType) {
-        this.objectType = objectType;
     }
 
     public String getStartsWith() {

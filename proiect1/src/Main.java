@@ -1,8 +1,11 @@
+
+import classes.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import input.Input;
+import input.*;
 
+import javax.lang.model.element.PackageElement;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,17 +23,15 @@ public class Main {
                 Input.class);
 
         ArrayNode output = objectMapper.createArrayNode();
-        System.out.println("Hello");
 
+        Database.getDatabase().initialiseDatabase(inputData);
 
-
-
-
-
-
-
-
-
+        Page current_page = new HomepageNeautentificat();
+        PersonalDatabase current_user = null;
+        System.out.println(inputData.getActions().size());
+        for (ActionsInput action : inputData.getActions()) {
+            Database.getDatabase().doAction(action,objectMapper,output);
+        }
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File("results/out_" + in_file.getFileName()), output);

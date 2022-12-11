@@ -1,5 +1,7 @@
 package input;
 
+import java.util.Objects;
+
 public class UsersInput {
 
     private String name;
@@ -7,6 +9,46 @@ public class UsersInput {
     private String accountType;
     private String country;
     private String balance;
+
+    private int tokens;
+    private int numFreeMovies;
+
+
+
+    public UsersInput(UsersInput user) {
+        tokens = 0;
+        numFreeMovies = 15;
+        name = user.getName();
+        password = user.getPassword();
+        accountType = user.getAccountType();
+        country = user.getCountry();
+        balance = user.getBalance();
+    }
+
+    public UsersInput() {
+        tokens = 0;
+        numFreeMovies = 15;
+    }
+
+    public boolean equals(UsersInput usersInput) {
+        return Objects.equals(this.getName(), usersInput.getName()) && Objects.equals(this.getPassword(), usersInput.getPassword());
+    }
+
+    public int getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(int tokens) {
+        this.tokens = tokens;
+    }
+
+    public int getNumFreeMovies() {
+        return numFreeMovies;
+    }
+
+    public void setNumFreeMovies(int numFreeMovies) {
+        this.numFreeMovies = numFreeMovies;
+    }
 
     public String getName() {
         return name;

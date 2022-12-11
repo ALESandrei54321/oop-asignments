@@ -10,6 +10,9 @@ public class MoviesInput {
     private ArrayList<String> genres;
     private ArrayList<String> countriesBanned;
     private ArrayList<String> actors;
+    private int numLikes = 0;
+    private float ratingSum = 0;
+    private int numRating = 0;
 
     public String getName() {
         return name;
@@ -57,5 +60,29 @@ public class MoviesInput {
 
     public void setActors(ArrayList<String> actors) {
         this.actors = actors;
+    }
+
+    public int getNumLikes() {
+        return numLikes;
+    }
+
+    public void setNumLikes(int numLikes) {
+        this.numLikes = numLikes;
+    }
+
+    public float getRatingSum() {
+        return ratingSum;
+    }
+
+    public void setRatingSum(float ratingSum) {
+        this.ratingSum = ratingSum;
+    }
+
+    public int getNumRating() {
+        return numRating;
+    }
+
+    public void setNumRating(int numRating) {
+        this.numRating = numRating;
     }
 }
