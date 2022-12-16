@@ -3,6 +3,12 @@ package input;
 import java.util.Objects;
 
 public class UsersInput {
+    @Override
+    public String toString() {
+        return "UsersInput{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 
     private String name;
     private String password;

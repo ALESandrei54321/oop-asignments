@@ -13,6 +13,12 @@ public class PersonalDatabase {
     private UsersInput user;
     private ArrayList<MovieDetails> personal_movies = null;
 
+    @Override
+    public String toString() {
+        return "PersonalDatabase{" +
+                "user=" + user.getName();
+
+    }
 
     public PersonalDatabase(UsersInput usersInput) {
         user = usersInput;

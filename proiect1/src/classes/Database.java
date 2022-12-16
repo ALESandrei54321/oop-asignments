@@ -31,11 +31,13 @@ public class Database {
         return instance;
     }
     public void initialiseDatabase(Input input) {
+        ArrayList<PersonalDatabase> list = new ArrayList<>();
         for (CredentialsInput in : input.getUsers()) {
             UsersInput usersInput = in.getCredentials();
             PersonalDatabase user_database = new PersonalDatabase(usersInput);
-            Database.getDatabase().getUser_accounts().add(user_database);
+            list.add(user_database);
         }
+        Database.getDatabase().setUser_accounts(list);
         Database.getDatabase().setMovies(input.getMovies());
         current_user = null;
         current_page = new HomepageNeautentificat();
@@ -112,7 +114,10 @@ public class Database {
         }
         film_out.set("countriesBanned", node3);
         film_out.put("numLikes", film.getNumLikes());
-        film_out.put("rating", (film.getRatingSum() / film.getNumRating()));
+        if (film.getNumRating() == 0)
+            film_out.put("rating", film.getRatingSum());
+        else
+            film_out.put("rating", (film.getRatingSum() / film.getNumRating()));
         film_out.put("numRatings", film.getNumRating());
     }
 
@@ -135,7 +140,6 @@ public class Database {
                 objectNode.put("currentUser", (JsonNode) null);
                 output.add(objectNode);
 
-                System.out.println("Error");
                 return;
             }
 
@@ -151,13 +155,46 @@ public class Database {
                     current_movie_list = new ArrayList<>();
                     current_page = new HomepageNeautentificat();
                 }
-            }
-            if (!Objects.equals(action.getPage(), "see details")) {
+                case "movies" -> {
+                    current_page = new Movies();
+                    ArrayList<MoviesInput> visible_movies = new ArrayList<>();
+                    for (MovieDetails in : current_user.getPersonal_movies())
+                        visible_movies.add(in.getMovie());
+                    current_movie_list = visible_movies;
+
+                    ObjectNode objectNode = mapper.createObjectNode();
+                    objectNode.put("error", (JsonNode) null);
+                    printCurrentMovieList(objectNode, mapper);
+                    printCurrentUser(objectNode, mapper);
+                    output.add(objectNode);
+                }
+                case "see details"-> {
+                    boolean found = false;
+                    for (MovieDetails movieDetails: getCurrent_user().getPersonal_movies()) {
+                        if (Objects.equals(movieDetails.getMovie().getName(), action.getMovie())) {
+                            ArrayList<MoviesInput> list = new ArrayList<>();
+                            list.add(movieDetails.getMovie());
+                            current_movie_list = list;
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        ObjectNode objectNode = mapper.createObjectNode();
+                        objectNode.put("error", "Error");
+                        printCurrentMovieList(objectNode, mapper);
+                        objectNode.put("currentUser", (JsonNode) null);
+                        output.add(objectNode);
+                        return;
+                    }
+                    ObjectNode objectNode = mapper.createObjectNode();
+                    objectNode.put("error", (JsonNode) null);
+                    printCurrentMovieList(objectNode, mapper);
+                    printCurrentUser(objectNode, mapper);
+                    output.add(objectNode);
+                }
 
             }
-            else {
 
-            }
         }
         else { // action type == "on page"
             switch (action.getFeature()) {
@@ -169,8 +206,6 @@ public class Database {
                         printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
-
-                        System.out.println("Error");
                         return;
 
                     }
@@ -182,7 +217,6 @@ public class Database {
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
-                        System.out.println("Error");
                         current_page = new HomepageNeautentificat();
                         return;
 
@@ -205,7 +239,6 @@ public class Database {
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
-                        System.out.println("Error");
                         return;
 
                     }
@@ -217,7 +250,6 @@ public class Database {
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
-                        System.out.println("Error");
                         return;
                     }
 
@@ -228,6 +260,38 @@ public class Database {
                     Database.getDatabase().getUser_accounts().add(current_user);
                     current_page = new HomepageAutentificat();
 
+                    ObjectNode objectNode = mapper.createObjectNode();
+                    objectNode.put("error", (JsonNode) null);
+                    printCurrentMovieList(objectNode, mapper);
+                    printCurrentUser(objectNode, mapper);
+                    output.add(objectNode);
+                }
+                case "search" -> {
+                    if (!Objects.equals(current_page.getPage_name(), "movies")) {
+                        ObjectNode objectNode = mapper.createObjectNode();
+                        objectNode.put("error", "Error");
+                        printCurrentMovieList(objectNode, mapper);
+                        objectNode.put("currentUser", (JsonNode) null);
+                        output.add(objectNode);
+                        return;
+                    }
+                    ((Movies)current_page).searchStartsWith(action.getStartsWith());
+                    ObjectNode objectNode = mapper.createObjectNode();
+                    objectNode.put("error", (JsonNode) null);
+                    printCurrentMovieList(objectNode, mapper);
+                    printCurrentUser(objectNode, mapper);
+                    output.add(objectNode);
+                }
+                case "filter" -> {
+                    if (!Objects.equals(current_page.getPage_name(), "movies")) {
+                        ObjectNode objectNode = mapper.createObjectNode();
+                        objectNode.put("error", "Error");
+                        printCurrentMovieList(objectNode, mapper);
+                        objectNode.put("currentUser", (JsonNode) null);
+                        output.add(objectNode);
+                        return;
+                    }
+                    ((Movies)current_page).filter(action.getFilters());
                     ObjectNode objectNode = mapper.createObjectNode();
                     objectNode.put("error", (JsonNode) null);
                     printCurrentMovieList(objectNode, mapper);
@@ -262,6 +326,14 @@ public class Database {
         return null;
     }
 
+    public ArrayList<MoviesInput> getCurrent_movie_list() {
+        return current_movie_list;
+    }
+
+    public void setCurrent_movie_list(ArrayList<MoviesInput> current_movie_list) {
+        this.current_movie_list = current_movie_list;
+    }
+
     public Page getCurrent_page() {
         return current_page;
     }
@@ -293,4 +365,5 @@ public class Database {
     public void setUser_accounts(ArrayList<PersonalDatabase> user_accounts) {
         this.user_accounts = user_accounts;
     }
+
 }

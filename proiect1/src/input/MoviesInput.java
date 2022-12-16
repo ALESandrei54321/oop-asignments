@@ -3,6 +3,20 @@ package input;
 import java.util.ArrayList;
 
 public class MoviesInput {
+    @Override
+    public String toString() {
+        return "MoviesInput{" +
+                "name='" + name + '\'' +
+                ", year=" + year +
+                ", duration=" + duration +
+                ", genres=" + genres +
+                ", countriesBanned=" + countriesBanned +
+                ", actors=" + actors +
+                ", numLikes=" + numLikes +
+                ", ratingSum=" + ratingSum +
+                ", numRating=" + numRating +
+                '}';
+    }
 
     private String name;
     private int year;
@@ -11,7 +25,7 @@ public class MoviesInput {
     private ArrayList<String> countriesBanned;
     private ArrayList<String> actors;
     private int numLikes = 0;
-    private float ratingSum = 0;
+    private double ratingSum = 0;
     private int numRating = 0;
 
     public String getName() {
@@ -70,11 +84,11 @@ public class MoviesInput {
         this.numLikes = numLikes;
     }
 
-    public float getRatingSum() {
+    public double getRatingSum() {
         return ratingSum;
     }
 
-    public void setRatingSum(float ratingSum) {
+    public void setRatingSum(double ratingSum) {
         this.ratingSum = ratingSum;
     }
 
@@ -85,4 +99,6 @@ public class MoviesInput {
     public void setNumRating(int numRating) {
         this.numRating = numRating;
     }
+
+
 }

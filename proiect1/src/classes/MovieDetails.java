@@ -2,7 +2,7 @@ package classes;
 
 import input.MoviesInput;
 
-public class MovieDetails extends Page{
+public class MovieDetails{
     private MoviesInput movie;
     private MovieCharacteristics movie_char;
     public MovieDetails(MoviesInput movie_input) {

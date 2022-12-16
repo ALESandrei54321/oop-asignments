@@ -24,11 +24,10 @@ public class Main {
 
         ArrayNode output = objectMapper.createArrayNode();
 
+
         Database.getDatabase().initialiseDatabase(inputData);
 
-        Page current_page = new HomepageNeautentificat();
-        PersonalDatabase current_user = null;
-        System.out.println(inputData.getActions().size());
+
         for (ActionsInput action : inputData.getActions()) {
             Database.getDatabase().doAction(action,objectMapper,output);
         }
