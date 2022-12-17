@@ -3,6 +3,14 @@ package classes;
 import input.MoviesInput;
 
 public class MovieDetails{
+    @Override
+    public String toString() {
+        return "MovieDetails{" +
+                "movie=" + movie +
+                ", movie_char=" + movie_char +
+                '}';
+    }
+
     private MoviesInput movie;
     private MovieCharacteristics movie_char;
     public MovieDetails(MoviesInput movie_input) {

@@ -25,7 +25,7 @@ public class MoviesInput {
     private ArrayList<String> countriesBanned;
     private ArrayList<String> actors;
     private int numLikes = 0;
-    private double ratingSum = 0;
+    private double ratingSum = 0.00;
     private int numRating = 0;
 
     public String getName() {

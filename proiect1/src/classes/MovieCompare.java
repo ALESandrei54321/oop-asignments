@@ -36,21 +36,54 @@ public class MovieCompare implements Comparator<MoviesInput> {
             rate2 = rate2 / o2.getNumRating();
         }
 
-        if (rate1 > rate2) {
-            return getRate_order();
-        }
-        else if (rate1 < rate2) {
-            return -getRate_order();
-        } else {
+        if (getRate_order() == 0) {
             if (o1.getDuration() > o2.getDuration()) {
-                return getDuration_order();
+                return -getDuration_order();
             }
             else if (o1.getDuration() < o2.getDuration()) {
-                return  -getDuration_order();
+                return  getDuration_order();
             }
+            return 0;
         }
 
+        if (getDuration_order() == 0) {
+            if (rate1 > rate2) {
+                return -getRate_order();
+            }
+            else if (rate1 < rate2) {
+                return getRate_order();
+            }
+            return 0;
+        }
+
+        if (o1.getDuration() > o2.getDuration()) {
+            return -getDuration_order();
+        }
+        else if (o1.getDuration() < o2.getDuration()) {
+            return  getDuration_order();
+        } else {
+            if (rate1 > rate2) {
+                return -getRate_order();
+            }
+            else if (rate1 < rate2) {
+                return getRate_order();
+            }
+        }
 
         return 0;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

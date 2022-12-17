@@ -12,13 +12,10 @@ import java.util.concurrent.ScheduledExecutorService;
 public class PersonalDatabase {
     private UsersInput user;
     private ArrayList<MovieDetails> personal_movies = null;
-
-    @Override
-    public String toString() {
-        return "PersonalDatabase{" +
-                "user=" + user.getName();
-
-    }
+    private ArrayList<MovieDetails> purchased_movies = null;
+    private ArrayList<MovieDetails> watched_movies = null;
+    private ArrayList<MovieDetails> liked_movies = null;
+    private ArrayList<MovieDetails> rated_movies = null;
 
     public PersonalDatabase(UsersInput usersInput) {
         user = usersInput;
@@ -27,6 +24,18 @@ public class PersonalDatabase {
             if (canWatch(usersInput, movie.getCountriesBanned()))
                 personal_movies.add(new MovieDetails(movie));
         }
+        purchased_movies = new ArrayList<>();
+        watched_movies = new ArrayList<>();
+        liked_movies = new ArrayList<>();
+        rated_movies = new ArrayList<>();
+    }
+
+    public MovieDetails get_movie_details(MoviesInput input) {
+        for (MovieDetails details: this.getPersonal_movies()) {
+            if (Objects.equals(details.getMovie().getName(), input.getName()))
+                return details;
+        }
+        return null;
     }
 
     public boolean canWatch(UsersInput usersInput, ArrayList<String> countries) {
@@ -54,5 +63,35 @@ public class PersonalDatabase {
         this.personal_movies = personal_movies;
     }
 
+    public ArrayList<MovieDetails> getPurchased_movies() {
+        return purchased_movies;
+    }
 
+    public void setPurchased_movies(ArrayList<MovieDetails> purchased_movies) {
+        this.purchased_movies = purchased_movies;
+    }
+
+    public ArrayList<MovieDetails> getWatched_movies() {
+        return watched_movies;
+    }
+
+    public void setWatched_movies(ArrayList<MovieDetails> watched_movies) {
+        this.watched_movies = watched_movies;
+    }
+
+    public ArrayList<MovieDetails> getLiked_movies() {
+        return liked_movies;
+    }
+
+    public void setLiked_movies(ArrayList<MovieDetails> liked_movies) {
+        this.liked_movies = liked_movies;
+    }
+
+    public ArrayList<MovieDetails> getRated_movies() {
+        return rated_movies;
+    }
+
+    public void setRated_movies(ArrayList<MovieDetails> rated_movies) {
+        this.rated_movies = rated_movies;
+    }
 }
