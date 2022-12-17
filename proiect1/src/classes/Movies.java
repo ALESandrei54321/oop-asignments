@@ -1,18 +1,13 @@
 package classes;
 
-import input.ActionsInput;
 import input.ContainsInput;
 import input.MoviesInput;
-import input.Sort;
+
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 
 public class Movies extends Page{
-
-
 
     public Movies() {
         super();
@@ -41,7 +36,6 @@ public class Movies extends Page{
 
 
         if (filters.getContains() != null && filters.getContains().getActors() != null) {
-            System.out.println("actors");
             ArrayList<MoviesInput> contains_list = new ArrayList<>();
             for (MoviesInput movie : list) {
                 boolean found = false;
@@ -60,7 +54,6 @@ public class Movies extends Page{
 
 
         if (filters.getContains() != null && filters.getContains().getGenre() != null) {
-            System.out.println("genres");
             ArrayList<MoviesInput> contains_list = new ArrayList<>();
             for (MoviesInput movie : list) {
                 boolean found = false;
@@ -76,43 +69,6 @@ public class Movies extends Page{
             }
             list = contains_list;
         }
-
-
-
-//        if (filters.getContains() != null) {
-//            if (filters.getContains().getActors() != null) {
-//                System.out.println("actors");
-//                for (MoviesInput movie: list) {
-//                    boolean found = false;
-//                    for (int i = 0; i < filters.getContains().getActors().size() && !found; i++) {
-//                        for (int j = 0; j < filters.getContains().getActors().size() && !found; j++) {
-//                            if (Objects.equals(movie.getActors().get(i), filters.getContains().getActors().get(j))) {
-//                                found = true;
-//                                break;
-//                            }
-//                        }
-//                    }
-//                    if (found) contains_list.add(movie);
-//                }
-//            }
-//            if (filters.getContains().getGenre() != null) {
-//                System.out.println("genres");
-//                for (MoviesInput movie: list) {
-//                    boolean found = false;
-//                    for (int i = 0; i < filters.getContains().getGenre().size() && !found; i++) {
-//                        for (int j = 0; j < filters.getContains().getGenre().size() && !found; j++) {
-//                            if (Objects.equals(movie.getGenres().get(i), filters.getContains().getGenre().get(j))) {
-//                                found = true;
-//                                break;
-//                            }
-//                        }
-//                    }
-//                    if (found) contains_list.add(movie);
-//                }
-//            }
-//        list = contains_list;
-//        }
-
 
         if (filters.getSort() != null) {
             MovieCompare comp = new MovieCompare();
@@ -130,12 +86,6 @@ public class Movies extends Page{
 
             list.sort(comp);
         }
-
-
-
         Database.getDatabase().setCurrent_movie_list(list);
-
-
-
     }
 }

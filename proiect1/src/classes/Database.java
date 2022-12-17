@@ -13,8 +13,6 @@ import java.util.Objects;
 public class Database {
     private static Database instance = null;
     private static final DecimalFormat df = new DecimalFormat("0.00");
-
-    //private ArrayList<UsersInput> users;
     private ArrayList<PersonalDatabase> user_accounts = new ArrayList<>();
     private ArrayList<MoviesInput> movies = new ArrayList<>();
     private Page current_page;
@@ -38,7 +36,6 @@ public class Database {
         for (CredentialsInput in : input.getUsers()) {
             UsersInput usersInput = in.getCredentials();
             PersonalDatabase user_database = new PersonalDatabase(usersInput);
-            //System.out.println(user_database.getPersonal_movies());
             list.add(user_database);
         }
         Database.getDatabase().setUser_accounts(list);
@@ -87,29 +84,6 @@ public class Database {
                 arrayNode4.add(film);
             }
 
-
-//            for (MovieDetails movieDetails: current_user.getPersonal_movies()) {
-//                if (movieDetails.getMovie_char().isOwned()) {
-//                    ObjectNode film = mapper.createObjectNode();
-//                    printMovieOutput(movieDetails.getMovie(), film, mapper);
-//                    arrayNode1.add(film);
-//                }
-//                if (movieDetails.getMovie_char().isHasWatched()) {
-//                    ObjectNode film = mapper.createObjectNode();
-//                    printMovieOutput(movieDetails.getMovie(), film, mapper);
-//                    arrayNode2.add(film);
-//                }
-//                if (movieDetails.getMovie_char().isLiked()) {
-//                    ObjectNode film = mapper.createObjectNode();
-//                    printMovieOutput(movieDetails.getMovie(), film, mapper);
-//                    arrayNode3.add(film);
-//                }
-//                if (movieDetails.getMovie_char().getRating() != 0) {
-//                    ObjectNode film = mapper.createObjectNode();
-//                    printMovieOutput(movieDetails.getMovie(), film, mapper);
-//                    arrayNode4.add(film);
-//                }
-//            }
             currentUserNode.set("purchasedMovies", arrayNode1);
             currentUserNode.set("watchedMovies", arrayNode2);
             currentUserNode.set("likedMovies", arrayNode3);
@@ -165,7 +139,6 @@ public class Database {
                 objectNode.put("error", "Error");
                 ArrayNode arrayNode = mapper.createArrayNode();
                 objectNode.set("currentMoviesList", arrayNode);
-                //printCurrentMovieList(objectNode, mapper);
                 objectNode.put("currentUser", (JsonNode) null);
                 output.add(objectNode);
 
@@ -252,13 +225,6 @@ public class Database {
 
                     }
                     if (!Database.getDatabase().checkLogin(action.getCredentials())) {
-
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
-
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
@@ -283,11 +249,6 @@ public class Database {
                 case "register" -> {
                     if (!Objects.equals(current_page.getPage_name(), "register")) {
 
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
@@ -300,12 +261,6 @@ public class Database {
 
                     }
                     if (Database.getDatabase().alreadyTakenCheck(action.getCredentials().getName())) {
-
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
 
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
@@ -336,17 +291,11 @@ public class Database {
                 }
                 case "search" -> {
                     if (!Objects.equals(current_page.getPage_name(), "movies")) {
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
-//                        return;
+
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
@@ -361,17 +310,11 @@ public class Database {
                 }
                 case "filter" -> {
                     if (!Objects.equals(current_page.getPage_name(), "movies")) {
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
-//                        return;
+
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
@@ -388,17 +331,11 @@ public class Database {
                     if (!Objects.equals(current_page.getPage_name(), "upgrades")) {
                         System.out.println("wrong page");
                         System.out.println(current_page.getPage_name());
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
-//                        return;
+
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
@@ -406,16 +343,10 @@ public class Database {
                     }
                     if (Integer.parseInt(current_user.getUser().getBalance()) < action.getCount()) {
                         System.out.println("no money");
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
@@ -426,51 +357,31 @@ public class Database {
                 }
                 case "buy premium account" -> {
                     if (!Objects.equals(current_page.getPage_name(), "upgrades")) {
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
-//                        return;
+
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
                         return;
                     }
                     if (!Objects.equals(current_user.getUser().getAccountType(), "standard")) {
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
-//                        return;
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
                         return;
                     }
                     if (current_user.getUser().getTokens() < 10) {
-//                        ObjectNode objectNode = mapper.createObjectNode();
-//                        objectNode.put("error", "Error");
-//                        printCurrentMovieList(objectNode, mapper);
-//                        objectNode.put("currentUser", (JsonNode) null);
-//                        output.add(objectNode);
-//                        return;
                         ObjectNode objectNode = mapper.createObjectNode();
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
 
@@ -486,7 +397,6 @@ public class Database {
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
                         return;
@@ -505,7 +415,6 @@ public class Database {
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
                         return;
@@ -576,7 +485,6 @@ public class Database {
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
                         return;
@@ -623,7 +531,6 @@ public class Database {
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
                         return;
@@ -679,7 +586,6 @@ public class Database {
                         objectNode.put("error", "Error");
                         ArrayNode arrayNode = mapper.createArrayNode();
                         objectNode.set("currentMoviesList", arrayNode);
-                        //printCurrentMovieList(objectNode, mapper);
                         objectNode.put("currentUser", (JsonNode) null);
                         output.add(objectNode);
                         return;
